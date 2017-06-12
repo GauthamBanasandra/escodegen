@@ -1,37 +1,37 @@
 /*
-  Copyright (C) 2012-2014 Yusuke Suzuki <utatane.tea@gmail.com>
-  Copyright (C) 2015 Ingvar Stepanyan <me@rreverser.com>
-  Copyright (C) 2014 Ivan Nikulin <ifaaan@gmail.com>
-  Copyright (C) 2012-2013 Michael Ficarra <escodegen.copyright@michael.ficarra.me>
-  Copyright (C) 2012-2013 Mathias Bynens <mathias@qiwi.be>
-  Copyright (C) 2013 Irakli Gozalishvili <rfobic@gmail.com>
-  Copyright (C) 2012 Robert Gust-Bardon <donate@robert.gust-bardon.org>
-  Copyright (C) 2012 John Freeman <jfreeman08@gmail.com>
-  Copyright (C) 2011-2012 Ariya Hidayat <ariya.hidayat@gmail.com>
-  Copyright (C) 2012 Joost-Wim Boekesteijn <joost-wim@boekesteijn.nl>
-  Copyright (C) 2012 Kris Kowal <kris.kowal@cixar.com>
-  Copyright (C) 2012 Arpad Borsos <arpad.borsos@googlemail.com>
+ Copyright (C) 2012-2014 Yusuke Suzuki <utatane.tea@gmail.com>
+ Copyright (C) 2015 Ingvar Stepanyan <me@rreverser.com>
+ Copyright (C) 2014 Ivan Nikulin <ifaaan@gmail.com>
+ Copyright (C) 2012-2013 Michael Ficarra <escodegen.copyright@michael.ficarra.me>
+ Copyright (C) 2012-2013 Mathias Bynens <mathias@qiwi.be>
+ Copyright (C) 2013 Irakli Gozalishvili <rfobic@gmail.com>
+ Copyright (C) 2012 Robert Gust-Bardon <donate@robert.gust-bardon.org>
+ Copyright (C) 2012 John Freeman <jfreeman08@gmail.com>
+ Copyright (C) 2011-2012 Ariya Hidayat <ariya.hidayat@gmail.com>
+ Copyright (C) 2012 Joost-Wim Boekesteijn <joost-wim@boekesteijn.nl>
+ Copyright (C) 2012 Kris Kowal <kris.kowal@cixar.com>
+ Copyright (C) 2012 Arpad Borsos <arpad.borsos@googlemail.com>
 
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions are met:
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
 
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
+ * Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in the
+ documentation and/or other materials provided with the distribution.
 
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-  ARE DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
-  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+ DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 /*global exports:true, require:true, global:true*/
 (function () {
@@ -65,7 +65,7 @@
         FORMAT_MINIFY,
         FORMAT_DEFAULTS;
 
-    estraverse = require('estraverse');
+    estraverse = require('../estraverse/estraverse.js');
     esutils = require('esutils');
 
     Syntax = estraverse.Syntax;
@@ -315,8 +315,8 @@
             temp += 'e' + exponent;
         }
         if ((temp.length < result.length ||
-                    (hexadecimal && value > 1e12 && Math.floor(value) === value && (temp = '0x' + value.toString(16)).length < result.length)) &&
-                +temp === value) {
+            (hexadecimal && value > 1e12 && Math.floor(value) === value && (temp = '0x' + value.toString(16)).length < result.length)) &&
+            +temp === value) {
             result = temp;
         }
 
@@ -565,7 +565,7 @@
             leftCharCode === 0x2F  /* / */ && rightCharCode === 0x69  /* i */) { // infix word operators all start with `i`
             return [left, noEmptySpace(), right];
         } else if (esutils.code.isWhiteSpace(leftCharCode) || esutils.code.isLineTerminator(leftCharCode) ||
-                esutils.code.isWhiteSpace(rightCharCode) || esutils.code.isLineTerminator(rightCharCode)) {
+            esutils.code.isWhiteSpace(rightCharCode) || esutils.code.isLineTerminator(rightCharCode)) {
             return [left, right];
         }
         return [left, space, right];
@@ -828,7 +828,7 @@
 
     // Helpers.
 
-    CodeGenerator.prototype.maybeBlock = function(stmt, flags) {
+    CodeGenerator.prototype.maybeBlock = function (stmt, flags) {
         var result, noLeadingComment, that = this;
 
         noLeadingComment = !extra.comment || !stmt.leadingComments;
@@ -898,8 +898,8 @@
         hasDefault = false;
 
         if (node.type === Syntax.ArrowFunctionExpression &&
-                !node.rest && (!node.defaults || node.defaults.length === 0) &&
-                node.params.length === 1 && node.params[0].type === Syntax.Identifier) {
+            !node.rest && (!node.defaults || node.defaults.length === 0) &&
+            node.params.length === 1 && node.params[0].type === Syntax.Identifier) {
             // arg => { } case
             result = [generateAsyncPrefix(node, true), generateIdentifier(node.params[0])];
         } else {
@@ -1067,7 +1067,7 @@
 
                         // handle spaces between lines
                         if (i > 0) {
-                            if (!stmt.body[i - 1].trailingComments  && !stmt.body[i].leadingComments) {
+                            if (!stmt.body[i - 1].trailingComments && !stmt.body[i].leadingComments) {
                                 generateBlankLines(stmt.body[i - 1].range[1], stmt.body[i].range[0], result);
                             }
                         }
@@ -1126,7 +1126,7 @@
         },
 
         ClassBody: function (stmt, flags) {
-            var result = [ '{', newline], that = this;
+            var result = ['{', newline], that = this;
 
             withIndent(function (indent) {
                 var i, iz;
@@ -1150,7 +1150,7 @@
 
         ClassDeclaration: function (stmt, flags) {
             var result, fragment;
-            result  = ['class'];
+            result = ['class'];
             if (stmt.id) {
                 result = join(result, this.generateExpression(stmt.id, Precedence.Sequence, E_TTT));
             }
@@ -1210,7 +1210,7 @@
         },
 
         ExportDefaultDeclaration: function (stmt, flags) {
-            var result = [ 'export' ], bodyFlags;
+            var result = ['export'], bodyFlags;
 
             bodyFlags = (flags & F_SEMICOLON_OPT) ? S_TFFT : S_TFFF;
 
@@ -1226,7 +1226,7 @@
         },
 
         ExportNamedDeclaration: function (stmt, flags) {
-            var result = [ 'export' ], bodyFlags, that = this;
+            var result = ['export'], bodyFlags, that = this;
 
             bodyFlags = (flags & F_SEMICOLON_OPT) ? S_TFFT : S_TFFF;
 
@@ -1337,10 +1337,10 @@
             // wrap expression with parentheses
             fragment = toSourceNodeWhenNeeded(result).toString();
             if (fragment.charCodeAt(0) === 0x7B  /* '{' */ ||  // ObjectExpression
-                    isClassPrefixed(fragment) ||
-                    isFunctionPrefixed(fragment) ||
-                    isAsyncPrefixed(fragment) ||
-                    (directive && (flags & F_DIRECTIVE_CTX) && stmt.expression.type === Syntax.Literal && typeof stmt.expression.value === 'string')) {
+                isClassPrefixed(fragment) ||
+                isFunctionPrefixed(fragment) ||
+                isAsyncPrefixed(fragment) ||
+                (directive && (flags & F_DIRECTIVE_CTX) && stmt.expression.type === Syntax.Literal && typeof stmt.expression.value === 'string')) {
                 result = ['(', result, ')' + this.semicolon(flags)];
             } else {
                 result.push(this.semicolon(flags));
@@ -1377,7 +1377,7 @@
             // ImportedBinding
             if (stmt.specifiers[cursor].type === Syntax.ImportDefaultSpecifier) {
                 result = join(result, [
-                        this.generateExpression(stmt.specifiers[cursor], Precedence.Sequence, E_TTT)
+                    this.generateExpression(stmt.specifiers[cursor], Precedence.Sequence, E_TTT)
                 ]);
                 ++cursor;
             }
@@ -1390,8 +1390,8 @@
                 if (stmt.specifiers[cursor].type === Syntax.ImportNamespaceSpecifier) {
                     // NameSpaceImport
                     result = join(result, [
-                            space,
-                            this.generateExpression(stmt.specifiers[cursor], Precedence.Sequence, E_TTT)
+                        space,
+                        this.generateExpression(stmt.specifiers[cursor], Precedence.Sequence, E_TTT)
                     ]);
                 } else {
                     // NamedImports
@@ -1455,7 +1455,7 @@
             // So if comment is attached to target node, we should specialize.
             var result, i, iz, node, bodyFlags, that = this;
 
-            result = [ stmt.kind ];
+            result = [stmt.kind];
 
             bodyFlags = (flags & F_ALLOW_IN) ? S_TFFF : S_FFFF;
 
@@ -1782,6 +1782,16 @@
             });
             result.push(this.maybeBlock(stmt.body, flags & F_SEMICOLON_OPT ? S_TFFT : S_TFFF));
             return result;
+        },
+
+        N1qlStatement: function (stmt, flags) {
+            var result = [stmt.queryType];
+            for(var item of stmt.body){
+                result.push(' ');
+                result.push(item.value);
+            }
+
+            return result;
         }
 
     };
@@ -1857,7 +1867,7 @@
             fragment = this.generateExpression(expr.right, currentPrecedence + 1, flags);
 
             if (expr.operator === '/' && fragment.toString().charAt(0) === '/' ||
-            expr.operator.slice(-1) === '<' && fragment.toString().slice(0, 3) === '!--') {
+                expr.operator.slice(-1) === '<' && fragment.toString().slice(0, 3) === '!--') {
                 // If '/' concats with '/' or `<` concats with `!--`, it is interpreted as comment start
                 result.push(noEmptySpace());
                 result.push(fragment);
@@ -1937,11 +1947,11 @@
                     //   4. Not hexadecimal OR octal number literal
                     // we should add a floating point.
                     if (
-                            fragment.indexOf('.') < 0 &&
-                            !/[eExX]/.test(fragment) &&
-                            esutils.code.isDecimalDigit(fragment.charCodeAt(fragment.length - 1)) &&
-                            !(fragment.length >= 2 && fragment.charCodeAt(0) === 48)  // '0'
-                            ) {
+                        fragment.indexOf('.') < 0 &&
+                        !/[eExX]/.test(fragment) &&
+                        esutils.code.isDecimalDigit(fragment.charCodeAt(fragment.length - 1)) &&
+                        !(fragment.length >= 2 && fragment.charCodeAt(0) === 48)  // '0'
+                    ) {
                         result.push('.');
                     }
                 }
@@ -1981,7 +1991,7 @@
                     rightCharCode = fragment.toString().charCodeAt(0);
 
                     if (((leftCharCode === 0x2B  /* + */ || leftCharCode === 0x2D  /* - */) && leftCharCode === rightCharCode) ||
-                            (esutils.code.isIdentifierPartES5(leftCharCode) && esutils.code.isIdentifierPartES5(rightCharCode))) {
+                        (esutils.code.isIdentifierPartES5(leftCharCode) && esutils.code.isIdentifierPartES5(rightCharCode))) {
                         result.push(noEmptySpace());
                         result.push(fragment);
                     } else {
@@ -2090,7 +2100,7 @@
             return result;
         },
 
-        RestElement: function(expr, precedence, flags) {
+        RestElement: function (expr, precedence, flags) {
             return '...' + this.generatePattern(expr.argument);
         },
 
@@ -2181,13 +2191,13 @@
                 //   dejavu.Class.declare({method2: function () {
                 //       }});
                 if (!hasLineTerminator(toSourceNodeWhenNeeded(fragment).toString())) {
-                    return [ '{', space, fragment, space, '}' ];
+                    return ['{', space, fragment, space, '}'];
                 }
             }
 
             withIndent(function (indent) {
                 var i, iz;
-                result = [ '{', newline, indent, fragment ];
+                result = ['{', newline, indent, fragment];
 
                 if (multiline) {
                     result.push(',' + newline);
@@ -2209,7 +2219,7 @@
             return result;
         },
 
-        AssignmentPattern: function(expr, precedence, flags) {
+        AssignmentPattern: function (expr, precedence, flags) {
             return this.generateAssignment(expr.left, expr.right, '=', precedence, flags);
         },
 
@@ -2234,7 +2244,7 @@
                     }
                 }
             }
-            result = ['{', multiline ? newline : '' ];
+            result = ['{', multiline ? newline : ''];
 
             withIndent(function (indent) {
                 var i, iz;
@@ -2282,7 +2292,7 @@
 
         ImportSpecifier: function (expr, precedence, flags) {
             var imported = expr.imported;
-            var result = [ imported.name ];
+            var result = [imported.name];
             var local = expr.local;
             if (local && local.name !== imported.name) {
                 result.push(noEmptySpace() + 'as' + noEmptySpace() + generateIdentifier(local));
@@ -2292,7 +2302,7 @@
 
         ExportSpecifier: function (expr, precedence, flags) {
             var local = expr.local;
-            var result = [ local.name ];
+            var result = [local.name];
             var exported = expr.exported;
             if (exported && exported.name !== local.name) {
                 result.push(noEmptySpace() + 'as' + noEmptySpace() + generateIdentifier(exported));
@@ -2332,7 +2342,7 @@
             }
 
             if (expr.regex) {
-              return '/' + expr.regex.pattern + '/' + expr.regex.flags;
+                return '/' + expr.regex.pattern + '/' + expr.regex.flags;
             }
             return generateRegExp(expr.value);
         },
@@ -2369,7 +2379,7 @@
             if (expr.filter) {
                 result = join(result, 'if' + space);
                 fragment = this.generateExpression(expr.filter, Precedence.Sequence, E_TTT);
-                result = join(result, [ '(', fragment, ')' ]);
+                result = join(result, ['(', fragment, ')']);
             }
 
             if (!extra.moz.comprehensionExpressionStartsWithAssignment) {
@@ -2396,7 +2406,7 @@
             fragment = join(fragment, expr.of ? 'of' : 'in');
             fragment = join(fragment, this.generateExpression(expr.right, Precedence.Sequence, E_TTT));
 
-            return [ 'for' + space + '(', fragment, ')' ];
+            return ['for' + space + '(', fragment, ')'];
         },
 
         SpreadElement: function (expr, precedence, flags) {
@@ -2426,7 +2436,7 @@
 
         TemplateLiteral: function (expr, precedence, flags) {
             var result, i, iz;
-            result = [ '`' ];
+            result = ['`'];
             for (i = 0, iz = expr.quasis.length; i < iz; ++i) {
                 result.push(this.generateExpression(expr.quasis[i], Precedence.Primary, E_TTT));
                 if (i + 1 < iz) {
@@ -2478,7 +2488,7 @@
         }
 
         fragment = toSourceNodeWhenNeeded(result).toString();
-        if (stmt.type === Syntax.Program && !safeConcatenation && newline === '' &&  fragment.charAt(fragment.length - 1) === '\n') {
+        if (stmt.type === Syntax.Program && !safeConcatenation && newline === '' && fragment.charAt(fragment.length - 1) === '\n') {
             result = sourceMap ? toSourceNodeWhenNeeded(result).replaceRight(/\s+$/, '') : fragment.replace(/\s+$/, '');
         }
 
@@ -2573,7 +2583,7 @@
 
         if (options.sourceContent) {
             pair.map.setSourceContent(options.sourceMap,
-                                      options.sourceContent);
+                options.sourceContent);
         }
 
         if (options.sourceMapWithCode) {
