@@ -37,6 +37,11 @@
 (function () {
     'use strict';
 
+    String.prototype.replaceAll = function(search, replacement) {
+        var target = this;
+        return target.replace(new RegExp(search, 'g'), replacement);
+    };
+
     var Syntax,
         Precedence,
         BinaryPrecedence,
@@ -65,7 +70,8 @@
         FORMAT_MINIFY,
         FORMAT_DEFAULTS;
 
-    estraverse = require('../estraverse/estraverse.js');
+    // estraverse = require('../estraverse/estraverse.js');
+    estraverse = require('estraverse');
     esutils = require('esutils');
 
     Syntax = estraverse.Syntax;
@@ -315,7 +321,7 @@
             temp += 'e' + exponent;
         }
         if ((temp.length < result.length ||
-            (hexadecimal && value > 1e12 && Math.floor(value) === value && (temp = '0x' + value.toString(16)).length < result.length)) &&
+                (hexadecimal && value > 1e12 && Math.floor(value) === value && (temp = '0x' + value.toString(16)).length < result.length)) &&
             +temp === value) {
             result = temp;
         }
@@ -1785,11 +1791,14 @@
         },
 
         N1qlStatement: function (stmt, flags) {
-            var result = [stmt.queryType];
-            for(var item of stmt.body){
-                result.push(' ');
-                result.push(item.value);
+            var result = [];
+            var query = stmt.queryType;
+            for (var item of stmt.body) {
+                query += ' ';
+                query += item.value.replaceAll('`', '\\`');
             }
+
+            result.push('new N1qlQuery(`' + query + '`);')
 
             return result;
         }
